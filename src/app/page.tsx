@@ -1,78 +1,87 @@
-"use client"
+"use client";
 
-import Image from "next/image";
-import { zodResolver } from "@hookform/resolvers/zod"
-import miImagen from '../../public/ferre_logo.png';
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Button } from "@/components/ui/button"
+import React, { useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/form";
 
-const FormSchema = z.object({
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-})
+export const FormSchema = z.object({
+  password: z.string().min(8, 'Password must be at least 8 characters long'),
+});
 
 export default function CreateAccount() {
+  const [isDarkMode, setIsDarkMode] = useState(true);
+
+  const toggleMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      email: "",
+      password: '',
     },
-  })
+  });
 
-  function onSubmit(data) {
-    console.log(data)
-  }
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white p-4">
-      <div>
-        <Image src={miImagen} alt="Logo" width={150} height={150}/>
+    <div className={isDarkMode ? 'bg-black text-white min-h-screen flex' : 'bg-white text-black min-h-screen flex'}>
+      {/* Left Column: Testimonial */}
+      <div className="w-1/2 flex flex-col justify-center items-center p-10 bg-gray-900">
+        <h1 className="text-4xl font-bold mb-6">Acme Inc</h1>
+        <p className="italic text-lg text-gray-400 mb-4">
+          “This library has saved me countless hours of work and helped me deliver stunning designs to my clients faster than ever before.”
+        </p>
+        <p className="font-semibold text-gray-400">Sofia Davis</p>
       </div>
-      <div className="w-full max-w-md">
-        {/* <h1 className="text-2xl font-bold mb-2 text-center">Ingresa a tu cuenta</h1> */}
-        <p className="text-sm text-gray-500 mb-6 text-center">Ingresa tus credenciales de administrador</p>
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                <FormField
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <label htmlFor="email">Email</label>
-                    <FormControl>
-                      <Input {...field} id="email" placeholder="Email" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
 
-              <FormField
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <label htmlFor="password">Password</label>
-                    <FormControl>
-                      <Input {...field} id="password" type="password" placeholder="Password" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            <Button type="submit" className="w-full bg-black text-white hover:bg-gray-800">
+      {/* Right Column: Form */}
+      <div className="w-1/2 flex flex-col justify-center p-10">
+        <button onClick={toggleMode} className="mb-4 self-end text-sm underline">
+          {isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+        </button>
+
+        <h2 className="text-3xl font-bold mb-6">Create an account</h2>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <Controller
+              name="password"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input {...field} id="password" type="password" placeholder="Password" className="mb-4" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <Button type="submit" className="w-full bg-black text-white hover:bg-gray-800 mb-4">
               Sign in with Email
             </Button>
           </form>
         </Form>
+
+        <p className="text-center mb-4">OR CONTINUE WITH</p>
+
+        {/* GitHub Login Button */}
+        <Button className="w-full bg-gray-800 text-white hover:bg-gray-700 mb-4">
+          <i className="fab fa-github mr-2"></i> GitHub
+        </Button>
 
         <p className="mt-6 text-xs text-center text-gray-500">
           By clicking continue, you agree to our{' '}
@@ -81,5 +90,5 @@ export default function CreateAccount() {
         </p>
       </div>
     </div>
-  )
+  );
 }

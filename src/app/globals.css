@@ -71,3 +71,13 @@
     font-style: normal;
   }
 }
+
+.bg-black {
+  background-color: black;
+  color: white;
+}
+
+.bg-white {
+  background-color: white;
+  color: black;
+}
