@@ -1,0 +1,37 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "main": "app",
+  "scripts": {
+    "dev": "nodemon config/server.js",
+    "start": "nodemon config/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "aws-lambda": "^1.0.7",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "express-async-errors": "^3.1.1",
+    "express-session": "^1.18.1",
+    "express-validator": "^7.2.0",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "moongose": "^1.0.0",
+    "morgan": "^1.10.0",
+    "semgrep": "^0.0.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.12.0",
+    "dotenv": "^16.4.5",
+    "eslint": "^9.12.0",
+    "eslint-plugin-react": "^7.37.1",
+    "globals": "^15.11.0",
+    "nodemon": "^3.1.7"
+  }
+}
